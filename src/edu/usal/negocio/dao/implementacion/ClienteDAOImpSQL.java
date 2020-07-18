@@ -72,18 +72,18 @@ public class ClienteDAOImpSQL implements ClienteDAO {
 
 	@Override
 	public boolean deleteCliente(Clientes cliente, Connection con) throws DAOException, SQLException {
-		PreparedStatement ps;
-		con.setAutoCommit(false);
+        PreparedStatement ps;
+        con.setAutoCommit(true);
 
-		ps = con.prepareStatement(DELETE);
-		ps.setLong(1, cliente.getIdCliente());
+        ps = con.prepareStatement(DELETE);
+        ps.setLong(1, cliente.getIdCliente());
 
-		if (ps.executeUpdate() > 0) {
-			return true;
-		}
-		if (ps != null) {
-			ps.close();
-		}
+        if (ps.executeUpdate() > 0) {
+            return true;
+        }
+        if (ps != null) {
+            ps.close();
+        }
 		return false;
 	}
 

@@ -37,7 +37,7 @@ public class pasaporte {
         Pasaportes pasaporte = new Pasaportes("AOF123", "probando123", fechaemision, fechavencimiento, pais, null);
         Direcciones direccion = new Direcciones("Libert", "1154", "Lujan", "6700", pais, provincia, null);
         Telefonos telefono = new Telefonos("232356", "2323122", "2323054", null);
-        Clientes cliente = new Clientes("Agustin", "Martinez Gomez", "5546", "580890", "Jose.martinezgomez@usal.edu.ar", fechanacimiento, 30L, pasaporte, telefono, ps, direccion);
+        Clientes cliente = new Clientes("Agustin", "Martinez Gomez", "5546", "580890", "Jose.martinezgomez@usal.edu.ar", fechanacimiento, 5L, pasaporte, telefono, ps, direccion);
 
         PasaporteDAO pasaimp = new PasaporteDAOImpSQL();
 
@@ -49,13 +49,13 @@ public class pasaporte {
 //            System.out.println("No se pudo actualizar");
 //        }
 
-        //delete pasaporte
+//        delete pasaporte
 
-//        if(pasaimp.deletePasaporte(cliente,con)){
-//            System.out.println("Se pudo eliminar el pasaporte");
-//        }else{
-//            System.out.println("No se pudo eliminar ");
-//        }
+        if (pasaimp.deletePasaporte(cliente, con)) {
+            System.out.println("Se pudo eliminar el pasaporte");
+        } else {
+            System.out.println("No se pudo eliminar ");
+        }
 
     }
 }

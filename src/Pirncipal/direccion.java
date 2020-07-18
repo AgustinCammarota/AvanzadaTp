@@ -37,9 +37,9 @@ public class direccion {
         Pasaportes pasaporte = new Pasaportes("AOF123", "Argen", fechaemision, fechavencimiento, pais, null);
         Direcciones direccion = new Direcciones("Libert", "1154", "Lujan", "6700", pais, provincia, null);
         Telefonos telefono = new Telefonos("232356", "2323122", "2323054", null);
-        Clientes cliente = new Clientes("Agustin", "Martinez Gomez", "5546", "580890", "Jose.martinezgomez@usal.edu.ar", fechanacimiento, 7L, pasaporte, telefono, ps, direccion);
+        Clientes cliente = new Clientes("Agustin", "Martinez Gomez", "5546", "580890", "Jose.martinezgomez@usal.edu.ar", fechanacimiento, 5L, pasaporte, telefono, ps, direccion);
 
-        //direImple.updateDireccion(cliente, con);
-        //direImple.deleteDireccion(cliente, con);
+        direImple.updateDireccion(cliente, con);
+        direImple.deleteDireccion(cliente, con);
     }
 }

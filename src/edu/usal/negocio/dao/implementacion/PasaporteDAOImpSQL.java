@@ -70,18 +70,18 @@ public class PasaporteDAOImpSQL implements PasaporteDAO {
 
 	@Override
 	public boolean deletePasaporte(Clientes cliente, Connection cn) throws DAOException, SQLException {
-		PreparedStatement ps = null;
-		cn.setAutoCommit(false);
+        cn.setAutoCommit(false);
+        PreparedStatement ps;
 
-		ps = cn.prepareStatement(DELETE);
-		ps.setLong(1, cliente.getIdCliente());
+        ps = cn.prepareStatement(DELETE);
+        ps.setLong(1, cliente.getIdCliente());
 
-		if (ps.executeUpdate() > 0) {
-			return true;
-		}
-		if (ps != null) {
-			ps.close();
-		}
+        if (ps.executeUpdate() > 0) {
+            return true;
+        }
+        if (ps != null) {
+            ps.close();
+        }
 		return false;
 	}
 }

@@ -65,19 +65,20 @@ public class PasajeroFrecuenteDAOImpSQL implements PasajeroFrecuenteDAO {
 
 	@Override
 	public boolean deletePasajeroFrecuente(Clientes cliente, Connection cn) throws DAOException, SQLException {
-		PreparedStatement ps = null;
-		cn.setAutoCommit(false);
+        PreparedStatement ps = null;
+        cn.setAutoCommit(false);
 
-		ps = cn.prepareStatement(DELETE);
-		ps.setLong(1, cliente.getIdCliente());
-
-		if (ps.executeUpdate() > 0) {
-			return true;
-		}
-		if (ps != null) {
-			ps.close();
-		}
-		return false;
-	}
+        ps = cn.prepareStatement(DELETE);
+        ps.setLong(1, cliente.getIdCliente());
+        int a = ps.executeUpdate();
+        System.out.println(a);
+        if (ps.executeUpdate() > 0) {
+            return true;
+        }
+        if (ps != null) {
+            ps.close();
+        }
+        return false;
+    }
 
 }
