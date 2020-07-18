@@ -51,7 +51,7 @@ public class ClienteDAOImpSQL implements ClienteDAO {
 	@Override
 	public boolean updateCliente(Clientes cliente, Connection con) throws DAOException, SQLException {
 		PreparedStatement ps = null;
-
+		con.setAutoCommit(false);
 		ps = con.prepareStatement(UPDATE);
 		ps.setString(1, cliente.getNombre());
 		ps.setString(2, cliente.getApellido());
@@ -73,7 +73,7 @@ public class ClienteDAOImpSQL implements ClienteDAO {
 	@Override
 	public boolean deleteCliente(Clientes cliente, Connection con) throws DAOException, SQLException {
 		PreparedStatement ps;
-		//con.setAutoCommit(false);
+		con.setAutoCommit(false);
 
 		ps = con.prepareStatement(DELETE);
 		ps.setLong(1, cliente.getIdCliente());

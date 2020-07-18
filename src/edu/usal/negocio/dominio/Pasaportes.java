@@ -13,7 +13,7 @@ public class Pasaportes implements Serializable {
     private String numeroPasaporte, autoridadEmision;
     private LocalDate fechaEmision, fechaVencimiento;
     private Paises pais;
-    private Long idPasaporte = null;
+    private Long idPasaporte;
 
     public Pasaportes() {
     }

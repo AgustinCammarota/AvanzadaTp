@@ -53,7 +53,7 @@ public class DireccionDAOImpSQL implements DireccionDAO {
 	@Override
 	public boolean updateDireccion(Clientes cliente, Connection cn) throws DAOException, SQLException {
 		PreparedStatement ps;
-
+		cn.setAutoCommit(false);
 		ps = cn.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, cliente.getDireccion().getCalle());
 		ps.setString(2, cliente.getDireccion().getAltura());
@@ -79,7 +79,7 @@ public class DireccionDAOImpSQL implements DireccionDAO {
 	@Override
 	public boolean deleteDireccion(Clientes cliente, Connection cn) throws DAOException, SQLException {
 		PreparedStatement ps = null;
-		//cn.setAutoCommit(false);
+		cn.setAutoCommit(false);
 
 		try {
 			ps = cn.prepareStatement(DELETE);

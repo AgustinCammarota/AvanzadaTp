@@ -12,8 +12,8 @@ public class PasaporteDAOImpSQL implements PasaporteDAO {
 
 	LocalDateConverter convertir = new LocalDateConverter();
 	final String INSERT = "INSERT INTO pasaportes (numero_pasaporte, autoridad_emision, fecha_emision, fecha_vencimiento, id_pais, id_cliente) VALUES(?,?,?,?,?,?)";
-	final String UPDATE = "UPDATE pasaportes SET numero_pasaporte=?, autoridad_emision=?, fecha_emision=?, fecha_vencimiento=? WHERE id_pasaporte=?";
-	final String DELETE = "DELETE FROM pasaportes WHERE id_pasaporte=?";
+	final String UPDATE = "UPDATE pasaportes SET numero_pasaporte=?, autoridad_emision=?, fecha_emision=?, fecha_vencimiento=? WHERE id_cliente=?";
+	final String DELETE = "DELETE FROM pasaportes WHERE id_cliente=?";
 
 	@Override
 	public boolean addPasaporte(Clientes cliente, Connection cn) throws DAOException, SQLException {
@@ -51,13 +51,13 @@ public class PasaporteDAOImpSQL implements PasaporteDAO {
 	@Override
 	public boolean updatePasaporte(Clientes cliente, Connection cn) throws DAOException, SQLException {
 		PreparedStatement ps = null;
-
+		cn.setAutoCommit(false);
 		ps = cn.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, cliente.getPasaporte().getNumeroPasaporte());
 		ps.setString(2, cliente.getPasaporte().getAutoridadEmision());
 		ps.setDate(3, convertir.convertToDatabaseColumn((cliente.getPasaporte().getFechaEmision())));
 		ps.setDate(4, convertir.convertToDatabaseColumn(cliente.getPasaporte().getFechaVencimiento()));
-		ps.setLong(5, cliente.getPasaporte().getPais().getIdPais());
+		ps.setLong(5, cliente.getIdCliente());
 
 		if (ps.executeUpdate() > 0) {
 			return true;
@@ -74,7 +74,7 @@ public class PasaporteDAOImpSQL implements PasaporteDAO {
 		cn.setAutoCommit(false);
 
 		ps = cn.prepareStatement(DELETE);
-		ps.setLong(7, cliente.getPasaporte().getIdPasaporte());
+		ps.setLong(1, cliente.getIdCliente());
 
 		if (ps.executeUpdate() > 0) {
 			return true;

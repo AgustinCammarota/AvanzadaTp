@@ -10,8 +10,8 @@ import java.sql.*;
 public class TelefonoDAOImpSQL implements TelefonoDAO {
 
 	final String INSERT = "INSERT INTO telefonos (personal, celular, laboral, id_cliente) VALUES(?,?,?,?)";
-	final String UPDATE = "UPDATE telefonos SET personal=?, celular=?, laboral=? WHERE id_telefono=?";
-	final String DELETE = "DELETE FROM telefonos WHERE id_telefono=?";
+	final String UPDATE = "UPDATE telefonos SET personal=?, celular=?, laboral=? WHERE id_cliente=?";
+	final String DELETE = "DELETE FROM telefonos WHERE id_cliente=?";
 
 	@Override
 	public boolean addTelefono(Clientes cliente, Connection cn) throws DAOException, SQLException {
@@ -52,6 +52,7 @@ public class TelefonoDAOImpSQL implements TelefonoDAO {
 		ps.setString(1, cliente.getTelefono().getNumeroPersonal());
 		ps.setString(2, cliente.getTelefono().getNumeroCelular());
 		ps.setString(3, cliente.getTelefono().getNumeroLaboral());
+		ps.setLong(4,cliente.getIdCliente());
 
 		if (ps.executeUpdate() > 0) {
 			return true;
@@ -64,14 +65,15 @@ public class TelefonoDAOImpSQL implements TelefonoDAO {
 
 	@Override
 	public boolean deleteTelefono(Clientes cliente, Connection cn) throws DAOException, SQLException {
-		PreparedStatement ps = null;
+		PreparedStatement ps=null;
 		cn.setAutoCommit(false);
 
 		ps = cn.prepareStatement(DELETE);
-		ps.setLong(1, cliente.getTelefono().getIdTelefono());
-		ps.executeUpdate();
+		ps.setLong(1, cliente.getIdCliente());
 
-		if (ps.executeUpdate() > 0) {
+		int r = ps.executeUpdate();
+
+		if (r> 0) {
 			return true;
 		}
 		if (ps != null) {

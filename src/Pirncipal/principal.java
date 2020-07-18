@@ -15,9 +15,9 @@ public class principal {
 
     public static void main(String[] args) throws IOException, DAOException, SQLException {
 
-        //FUNCIONA CLIENTE, DIRECCION, PAIS, PROVINCIA, AEROLINEA, (SACAR AUTOCOMIT)
+        //FUNCIONA CLIENTE, DIRECCION, PAIS, PROVINCIA, AEROLINEA, TELEFONO, (SACAR AUTOCOMIT)
 
-        //PASAJERO FRECUENTE, TELEFONO, PASAPORTE.
+        //PASAJERO FRECUENTE, PASAPORTE.
 
         Paises pais = null;
         Provincias provincia = null;
@@ -36,15 +36,23 @@ public class principal {
         provincia = provinciaImp.queryProvincia(1, con);
         aerolinea = aerolineaImp.queryAerolinea(1, con);
 
+        if(!con.isClosed()){
+            System.out.println("Conectado");
+        }else{
+            System.out.println("no conectado");
+        }
+
         LocalDate fechaemision = LocalDate.now();
         LocalDate fechavencimiento = LocalDate.now();
         LocalDate fechanacimiento = LocalDate.now();
-        PasajerosFrecuentes ps = new PasajerosFrecuentes("dsadsads", "lalalan", aerolinea, null);
+        PasajerosFrecuentes ps = new PasajerosFrecuentes("asdasd", "lalalan", aerolinea, null);
         Pasaportes pasaporte = new Pasaportes("AOF123", "Argen", fechaemision, fechavencimiento, pais, null);
-        Direcciones direccion = new Direcciones("Av Espana", "1154", "Lujan", "6700", pais, provincia, null);
-        Telefonos telefono = new Telefonos("232356", "2323122", "2323054", null);
-        Clientes cliente = new Clientes("Agustin", "Martinez Gomez", "5546", "580890", "Jose.martinezgomez@usal.edu.ar", fechanacimiento, 9L, pasaporte, telefono, ps, direccion);
+        Direcciones direccion = new Direcciones("San Martin", "1154", "Lujan", "6700", pais, provincia, null);
+        Telefonos telefono = new Telefonos("1111", "2323122", "2323054", null);
+        Clientes cliente = new Clientes("Agustin", "Martinez Gomez", "5546", "580890", "Jose.martinezgomez@usal.edu.ar", fechanacimiento, 34L, pasaporte, telefono, ps, direccion);
 
+
+                // ADD CLIENTE
 //        try {
 //
 //            if (clienteImple.addCliente(cliente, con) && pasaImple.addPasaporte(cliente, con) && pasaFreImple.addPasajeroFrecuente(cliente, con) && teleImple.addTelefono(cliente, con) &&
@@ -60,13 +68,39 @@ public class principal {
 //            r.printStackTrace();
 //        }
 
+            // UPDATE CLIENTE
+
+//        if(clienteImple.updateCliente(cliente,con) && pasaImple.updatePasaporte(cliente,con) && pasaFreImple.updatePasajeroFrecuente(cliente,con) && teleImple.updateTelefono(cliente,con) &&
+//            direImple.updateDireccion(cliente,con)){
+//            Connections.Commit(con);
+//            System.out.println("Se actualizaron los datos del cliente");
+//        }else{
+//            Connections.RollBack(con);
+//            System.out.println("No se pudo actualizar ");
+//        }
+
+            // DELETE CLIENTE
+
+        if(clienteImple.deleteCliente(cliente,con) && pasaImple.deletePasaporte(cliente,con) && pasaFreImple.deletePasajeroFrecuente(cliente,con) && teleImple.deleteTelefono(cliente,con) &&
+            direImple.deleteDireccion(cliente,con)){
+            Connections.Commit(con);
+            System.out.println("Se pudo eliminar el cliente y todos sus objetos");
+        }else{
+            Connections.RollBack(con);
+            System.out.println("No se pudo eliminar");
+        }
+
+
+
+
+        // GETONE SOLO FUNCIONA CON CLIENTES QUE TENGAN TODOS LOS DATOS.
 //        Clientes cliente1;
-//               cliente1 = clienteImple.queryCliente( 3L, con);
+//              cliente1 = clienteImple.queryCliente( 18L, con);
 //        System.out.println(cliente1.toString());
 
 //        clienteImple.updateCliente(cliente, con);
 
-        clienteImple.deleteCliente(cliente, con);
+//        clienteImple.deleteCliente(cliente, con);
 
     }
 }
