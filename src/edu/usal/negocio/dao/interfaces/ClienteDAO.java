@@ -16,7 +16,7 @@ public interface ClienteDAO {
 
     public boolean deleteCliente(Clientes cliente, Connection cn) throws FileNotFoundException, IOException, DAOException, SQLException;
 
-    public Clientes queryCliente(int Id, Connection con) throws FileNotFoundException, IOException, DAOException, SQLException;
+    public Clientes queryCliente(Long id, Connection con) throws FileNotFoundException, IOException, DAOException, SQLException;
 
     public List<Clientes> getAllClientes(Connection con) throws FileNotFoundException, IOException, DAOException, SQLException;
 

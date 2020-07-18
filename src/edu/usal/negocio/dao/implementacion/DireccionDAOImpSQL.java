@@ -10,8 +10,8 @@ import java.sql.*;
 public class DireccionDAOImpSQL implements DireccionDAO {
 
 	final String INSERT = "INSERT INTO direcciones (calle, altura, ciudad, codigo_postal, id_pais, id_cliente, id_provincia) VALUES(?,?,?,?,?,?,?)";
-	final String UPDATE = "UPDATE direcciones SET calle=?, altura=?, ciudad=?, codigo_postal=?, id_pais=?, id_provincia=? WHERE id_direccion=?";
-	final String DELETE = "DELETE FROM direcciones WHERE id_direccion=?";
+	final String UPDATE = "UPDATE direcciones SET calle=?, altura=?, ciudad=?, codigo_postal=?, id_pais=?, id_provincia=? WHERE id_cliente=?";
+	final String DELETE = "DELETE FROM direcciones WHERE id_cliente=?";
 
 	@Override
 	public boolean addDireccion(Clientes cliente, Connection cn) throws SQLException, DAOException {
@@ -30,7 +30,7 @@ public class DireccionDAOImpSQL implements DireccionDAO {
 		if (cliente.getDireccion().getPais().getIdPais() == 9) {
 			ps.setLong(7, cliente.getDireccion().getProvincia().getIdProvincia());
 		} else {
-			ps.setNull(7, Type.INT);
+			//ps.setNull(7, Type.INT);
 		}
 		rs = ps.getGeneratedKeys();
 
@@ -52,7 +52,7 @@ public class DireccionDAOImpSQL implements DireccionDAO {
 
 	@Override
 	public boolean updateDireccion(Clientes cliente, Connection cn) throws DAOException, SQLException {
-		PreparedStatement ps = null;
+		PreparedStatement ps;
 
 		ps = cn.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, cliente.getDireccion().getCalle());
@@ -61,10 +61,11 @@ public class DireccionDAOImpSQL implements DireccionDAO {
 		ps.setString(4, cliente.getDireccion().getCodigoPostal());
 		ps.setLong(5, cliente.getDireccion().getPais().getIdPais());
 		if (cliente.getDireccion().getPais().getIdPais() == 9) {
-			ps.setLong(7, cliente.getDireccion().getProvincia().getIdProvincia());
+			ps.setLong(6, cliente.getDireccion().getProvincia().getIdProvincia());
 		} else {
-			ps.setNull(7, Type.LONG);
+			ps.setNull(6, Types.NULL);
 		}
+		ps.setLong(7, cliente.getIdCliente());
 		if (ps.executeUpdate() > 0) {
 			return true;
 		}
@@ -78,11 +79,11 @@ public class DireccionDAOImpSQL implements DireccionDAO {
 	@Override
 	public boolean deleteDireccion(Clientes cliente, Connection cn) throws DAOException, SQLException {
 		PreparedStatement ps = null;
-		cn.setAutoCommit(false);
+		//cn.setAutoCommit(false);
 
 		try {
 			ps = cn.prepareStatement(DELETE);
-			ps.setLong(1, cliente.getDireccion().getIdDireccion());
+			ps.setLong(1, cliente.getIdCliente());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {

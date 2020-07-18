@@ -16,10 +16,10 @@ public class ClienteDAOImpSQL implements ClienteDAO {
 	private static final String UPDATE = "UPDATE clientes SET nombre=?, apellido=?, dni=?, cuit=?, fecha_nacimiento=?, email=? WHERE id_cliente=?";
 	private static final String DELETE = "DELETE FROM clientes WHERE id_cliente=?";
 	private static final String GETALL = "SELECT clientes.id_cliente, nombre, apellido, dni, cuit, fecha_nacimiento, email, id_direccion, calle, altura, ciudad, codigo_postal, paises.id_pais, paises.nombre_pais, provincias.id_provincia ,nombre_provincia, id_pasaporte ,numero_pasaporte, autoridad_emision, fecha_emision, fecha_vencimiento, p.id_pais, p.nombre_pais, id_telefono, personal, celular, laboral, id_pasajero_frecuente, alianza, categoria, aerolineas.id_aerolinea, nombre_aerolinea from clientes inner join direcciones on direcciones.id_cliente = clientes.id_cliente inner join paises on paises.id_pais = direcciones.id_pais inner join provincias on provincias.id_provincia = direcciones.id_provincia inner join pasaportes on pasaportes.id_cliente = clientes.id_cliente inner join paises p on p.id_pais = pasaportes.id_pais inner join telefonos on telefonos.id_cliente=clientes.id_cliente inner join pasajeros_frecuentes on pasajeros_frecuentes.id_cliente = clientes.id_cliente inner join aerolineas on aerolineas.id_aerolinea = pasajeros_frecuentes.id_aerolinea";
-	private static final String GETONE = "select clientes.id_cliente, nombre, apellido, dni, cuit, fecha_nacimiento, email, id_direccion, calle, altura, ciudad, codigo_postal, paises.id_pais, paises.nombre_pais, provincias.id_provincia ,nombre_provincia, id_pasaporte ,numero_pasaporte, autoridad_emision, fecha_emision, fecha_vencimiento, p.id_pais, p.nombre_pais, id_telefono, personal, celular, laboral, id_pasajero_frecuente, alianza, categoria, aerolineas.id_aerolinea, nombre_aerolinea from clientes inner join direcciones on direcciones.id_cliente = clientes.id_cliente inner join paises on paises.id_pais = direcciones.id_pais inner join provincias on provincias.id_provincia = direcciones.id_provincia inner join pasaportes on pasaportes.id_cliente = clientes.id_cliente inner join paises p on p.id_pais = pasaportes.id_pais inner join telefonos on telefonos.id_cliente=clientes.id_cliente inner join pasajeros_frecuentes on pasajeros_frecuentes.id_cliente = clientes.id_cliente inner join aerolineas on aerolineas.id_aerolinea = pasajeros_frecuentes.id_aerolinea WHERE clientes.id_cliente=?";
+	private static final String GETONE = "SELECT clientes.id_cliente, nombre, apellido, dni, cuit, fecha_nacimiento, email, id_direccion, calle, altura, ciudad, codigo_postal, paises.id_pais, paises.nombre_pais, provincias.id_provincia ,nombre_provincia, id_pasaporte ,numero_pasaporte, autoridad_emision, fecha_emision, fecha_vencimiento, p.id_pais, p.nombre_pais, id_telefono, personal, celular, laboral, id_pasajero_frecuente, alianza, categoria, aerolineas.id_aerolinea, nombre_aerolinea from clientes inner join direcciones on direcciones.id_cliente = clientes.id_cliente inner join paises on paises.id_pais = direcciones.id_pais inner join provincias on provincias.id_provincia = direcciones.id_provincia inner join pasaportes on pasaportes.id_cliente = clientes.id_cliente inner join paises p on p.id_pais = pasaportes.id_pais inner join telefonos on telefonos.id_cliente=clientes.id_cliente inner join pasajeros_frecuentes on pasajeros_frecuentes.id_cliente = clientes.id_cliente inner join aerolineas on aerolineas.id_aerolinea = pasajeros_frecuentes.id_aerolinea where clientes.id_cliente=?";
 	private static final LocalDateConverter convertir = new LocalDateConverter();
 
-	// @Override
+	@Override
 	public boolean addCliente(Clientes cliente, Connection con) throws DAOException, SQLException {
 		con.setAutoCommit(false);
 		PreparedStatement ps = null;
@@ -43,11 +43,8 @@ public class ClienteDAOImpSQL implements ClienteDAO {
 		}
 		if (rs != null) {
 			rs.close();
-		}
-		if (ps != null) {
 			ps.close();
 		}
-
 		return false;
 	}
 
@@ -62,6 +59,7 @@ public class ClienteDAOImpSQL implements ClienteDAO {
 		ps.setString(4, cliente.getCuit());
 		ps.setDate(5, convertir.convertToDatabaseColumn(cliente.getFechaNacimiento()));
 		ps.setString(6, cliente.getEmail());
+		ps.setLong(7, cliente.getIdCliente());
 
 		if (ps.executeUpdate() > 0) {
 			return true;
@@ -74,8 +72,8 @@ public class ClienteDAOImpSQL implements ClienteDAO {
 
 	@Override
 	public boolean deleteCliente(Clientes cliente, Connection con) throws DAOException, SQLException {
-		PreparedStatement ps = null;
-		con.setAutoCommit(false);
+		PreparedStatement ps;
+		//con.setAutoCommit(false);
 
 		ps = con.prepareStatement(DELETE);
 		ps.setLong(1, cliente.getIdCliente());
@@ -150,13 +148,13 @@ public class ClienteDAOImpSQL implements ClienteDAO {
 
 	@Override
 
-	public Clientes queryCliente(int Id, Connection con) throws DAOException, SQLException {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Clientes cliente = new Clientes();
+	public Clientes queryCliente(Long id, Connection con) throws DAOException, SQLException {
+		PreparedStatement ps;
+		ResultSet rs;
+		Clientes cliente;
 
 		ps = con.prepareStatement(GETONE);
-		ps.setInt(1, Id);
+		ps.setLong(1, id);
 		rs = ps.executeQuery();
 		if (rs.next()) {
 			cliente = Convertir(rs);
@@ -165,8 +163,6 @@ public class ClienteDAOImpSQL implements ClienteDAO {
 		}
 		if (rs != null) {
 			rs.close();
-		}
-		if (ps != null) {
 			ps.close();
 		}
 

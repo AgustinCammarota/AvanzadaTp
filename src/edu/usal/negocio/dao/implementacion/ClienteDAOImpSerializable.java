@@ -55,15 +55,15 @@ public class ClienteDAOImpSerializable implements ClienteDAO {
 	}
 
 	@Override
-	public Clientes queryCliente(int Id, Connection cn) throws FileNotFoundException, IOException {
-		List<Clientes> listado = getAllClientes(cn);
-		for (Clientes clientes : listado) {
-			if (clientes.getIdCliente() == Id) {
-				return clientes;
-			}
-		}
-		return null;
-	}
+    public Clientes queryCliente(Long id, Connection cn) throws FileNotFoundException, IOException {
+        List<Clientes> listado = getAllClientes(cn);
+        for (Clientes clientes : listado) {
+            if (clientes.getIdCliente() == id) {
+                return clientes;
+            }
+        }
+        return null;
+    }
 
 
 	@SuppressWarnings("unchecked")

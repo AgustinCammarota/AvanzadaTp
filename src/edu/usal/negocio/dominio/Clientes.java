@@ -10,7 +10,7 @@ public class Clientes implements Serializable {
     private static final long serialVersionUID = 1L;
     private String nombre, apellido, dni, cuit, email;
     private LocalDate fechaNacimiento;
-    private Long idCliente = null;
+    private Long idCliente;
     private Pasaportes pasaporte;
     private Telefonos telefono;
     private PasajerosFrecuentes pasajerofrecuente;

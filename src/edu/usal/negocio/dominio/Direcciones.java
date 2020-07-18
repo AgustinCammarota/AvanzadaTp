@@ -10,7 +10,7 @@ public class Direcciones implements Serializable {
     private String calle, altura, ciudad, codigoPostal;
     private Paises pais;
     private Provincias provincia;
-    private Long idDireccion = null;
+    private Long idDireccion;
 
     public Direcciones() {
     }

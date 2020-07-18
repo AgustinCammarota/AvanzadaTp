@@ -6,18 +6,12 @@ import edu.usal.negocio.dominio.*;
 import edu.usal.util.Connections;
 import edu.usal.util.DAOException;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-public class principal {
-
-    public static void main(String[] args) throws IOException, DAOException, SQLException {
-
-        //FUNCIONA CLIENTE, DIRECCION, PAIS, PROVINCIA, AEROLINEA, (SACAR AUTOCOMIT)
-
-        //PASAJERO FRECUENTE, TELEFONO, PASAPORTE.
+public class direccion {
+    public static void main(String[] args) throws SQLException, DAOException {
 
         Paises pais = null;
         Provincias provincia = null;
@@ -41,32 +35,11 @@ public class principal {
         LocalDate fechanacimiento = LocalDate.now();
         PasajerosFrecuentes ps = new PasajerosFrecuentes("dsadsads", "lalalan", aerolinea, null);
         Pasaportes pasaporte = new Pasaportes("AOF123", "Argen", fechaemision, fechavencimiento, pais, null);
-        Direcciones direccion = new Direcciones("Av Espana", "1154", "Lujan", "6700", pais, provincia, null);
+        Direcciones direccion = new Direcciones("Libert", "1154", "Lujan", "6700", pais, provincia, null);
         Telefonos telefono = new Telefonos("232356", "2323122", "2323054", null);
-        Clientes cliente = new Clientes("Agustin", "Martinez Gomez", "5546", "580890", "Jose.martinezgomez@usal.edu.ar", fechanacimiento, 9L, pasaporte, telefono, ps, direccion);
+        Clientes cliente = new Clientes("Agustin", "Martinez Gomez", "5546", "580890", "Jose.martinezgomez@usal.edu.ar", fechanacimiento, 7L, pasaporte, telefono, ps, direccion);
 
-//        try {
-//
-//            if (clienteImple.addCliente(cliente, con) && pasaImple.addPasaporte(cliente, con) && pasaFreImple.addPasajeroFrecuente(cliente, con) && teleImple.addTelefono(cliente, con) &&
-//                    direImple.addDireccion(cliente, con)) {
-//                Connections.Commit(con);
-//                System.out.println("Se pudo guardar el cliente");
-//            }
-//           // System.out.println(clienteImple.queryCliente(18, con));
-//            Connections.closeConnection(con);
-//        } catch (SQLException r) {
-//            Connections.RollBack(con);
-//            System.out.println("SE HZO EL ROLLBACK");
-//            r.printStackTrace();
-//        }
-
-//        Clientes cliente1;
-//               cliente1 = clienteImple.queryCliente( 3L, con);
-//        System.out.println(cliente1.toString());
-
-//        clienteImple.updateCliente(cliente, con);
-
-        clienteImple.deleteCliente(cliente, con);
-
+        //direImple.updateDireccion(cliente, con);
+        //direImple.deleteDireccion(cliente, con);
     }
 }
